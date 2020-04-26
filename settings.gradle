@@ -1,0 +1,10 @@
+rootProject.name = 'buildingblocks-core'
+
+include 'beanutils'
+include 'configutils'
+include 'healthutils'
+include 'phoneutils'
+include 'jpaauditor'
+include 'requestcontext'
+include 'dtobase'
+include 'dynamic-cache-resolver'
