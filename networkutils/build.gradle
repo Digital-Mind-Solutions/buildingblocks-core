@@ -26,7 +26,7 @@ bootJar {
     enabled = false
 }
 jar {
-    archiveBaseName = "healthutils"
+    archiveBaseName = "networkutils"
     enabled = true
 }
 
