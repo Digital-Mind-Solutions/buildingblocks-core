@@ -13,7 +13,7 @@ import org.digitalmind.buildingblocks.core.configutils.entity.Configuration;
 import org.digitalmind.buildingblocks.core.configutils.exception.ConfigUtilException;
 import org.digitalmind.buildingblocks.core.configutils.repository.ConfigurationRepository;
 import org.digitalmind.buildingblocks.core.configutils.service.ConfigUtilService;
-import org.digitalmind.buildingblocks.core.jpaauditor.entity.extension.Parameter;
+import org.digitalmind.buildingblocks.core.jpautils.entity.extension.Parameter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Service;

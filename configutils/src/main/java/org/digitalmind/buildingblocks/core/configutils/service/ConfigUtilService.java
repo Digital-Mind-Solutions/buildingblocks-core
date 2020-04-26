@@ -1,7 +1,7 @@
 package org.digitalmind.buildingblocks.core.configutils.service;
 
 import org.digitalmind.buildingblocks.core.configutils.entity.Configuration;
-import org.digitalmind.buildingblocks.core.jpaauditor.entity.extension.Parameter;
+import org.digitalmind.buildingblocks.core.jpautils.entity.extension.Parameter;
 
 public interface ConfigUtilService {
 
