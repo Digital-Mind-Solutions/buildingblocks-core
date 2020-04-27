@@ -1,4 +1,4 @@
-package org.digitalmind.buildingblocks.core.networkutils.inetutils.service;
+package org.digitalmind.buildingblocks.core.networkutils.service;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;

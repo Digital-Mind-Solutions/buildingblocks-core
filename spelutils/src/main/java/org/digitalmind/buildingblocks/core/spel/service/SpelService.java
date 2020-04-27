@@ -1,4 +1,4 @@
-package org.digitalmind.buildingblocks.core.spel;
+package org.digitalmind.buildingblocks.core.spel.service;
 
 import org.springframework.expression.EvaluationContext;
 import org.springframework.expression.Expression;

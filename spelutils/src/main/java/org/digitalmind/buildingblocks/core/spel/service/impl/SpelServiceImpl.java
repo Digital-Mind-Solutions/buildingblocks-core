@@ -1,8 +1,9 @@
-package org.digitalmind.buildingblocks.core.spel;
+package org.digitalmind.buildingblocks.core.spel.service.impl;
 
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
+import org.digitalmind.buildingblocks.core.spel.service.SpelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.expression.BeanFactoryResolver;

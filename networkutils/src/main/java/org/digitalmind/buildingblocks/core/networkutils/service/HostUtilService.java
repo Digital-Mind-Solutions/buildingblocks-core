@@ -1,4 +1,4 @@
-package org.digitalmind.buildingblocks.core.networkutils.hostutils.service;
+package org.digitalmind.buildingblocks.core.networkutils.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
