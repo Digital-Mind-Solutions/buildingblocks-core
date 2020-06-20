@@ -3,6 +3,7 @@ package org.digitalmind.buildingblocks.core.requestcontext.dto.impl;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
+import lombok.experimental.SuperBuilder;
 import org.springframework.security.core.Authentication;
 
 import javax.servlet.http.HttpServletRequest;
@@ -10,6 +11,7 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.Map;
 
+@SuperBuilder
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Getter
