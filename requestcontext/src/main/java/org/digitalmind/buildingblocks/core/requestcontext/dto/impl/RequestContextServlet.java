@@ -40,6 +40,9 @@ public class RequestContextServlet extends AbstractRequestContext {
     private void initLocale() {
         try {
             this.locale = this.httpRequest.getLocale();
+            if (this.locale == null) {
+                this.locale = defaultLocale;
+            }
         } catch (Exception e) {
             this.locale = defaultLocale;
         }
