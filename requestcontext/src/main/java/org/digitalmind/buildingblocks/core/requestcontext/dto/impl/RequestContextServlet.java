@@ -4,6 +4,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,6 +12,7 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.Map;
 
+@Slf4j
 @SuperBuilder
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
@@ -21,6 +23,7 @@ public class RequestContextServlet extends AbstractRequestContext {
     private Locale locale;
 
     public RequestContextServlet(HttpServletRequest httpRequest) {
+        super();
         this.httpRequest = httpRequest;
         initLocale();
     }
@@ -39,12 +42,14 @@ public class RequestContextServlet extends AbstractRequestContext {
 
     private void initLocale() {
         try {
-            this.locale = this.httpRequest.getLocale();
+            this.locale = new Locale(this.httpRequest.getLocale().getLanguage(), this.httpRequest.getLocale().getCountry());
             if (this.locale == null) {
                 this.locale = defaultLocale;
             }
         } catch (Exception e) {
             this.locale = defaultLocale;
+        } finally {
+            log.info("RequestContextServlet({})-> initLocale() to {}", getId(), locale);
         }
     }
 

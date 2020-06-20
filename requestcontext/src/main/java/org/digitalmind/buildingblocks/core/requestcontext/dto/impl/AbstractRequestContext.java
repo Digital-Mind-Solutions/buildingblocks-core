@@ -17,8 +17,8 @@ import java.util.*;
 @ToString(callSuper = true)
 @Getter
 public abstract class AbstractRequestContext implements RequestContext {
-    private static SimpleDateFormat sdf = new SimpleDateFormat("yyMMdd");
-    private static InetAddress inetAddress = inetAddress();
+    private static final SimpleDateFormat sdf = new SimpleDateFormat("yyMMdd");
+    private static final InetAddress inetAddress = inetAddress();
     protected static final Locale defaultLocale = new Locale("ro", "RO");
 
     @Builder.Default
