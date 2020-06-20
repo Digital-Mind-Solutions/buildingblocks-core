@@ -19,7 +19,7 @@ import java.util.*;
 public abstract class AbstractRequestContext implements RequestContext {
     private static SimpleDateFormat sdf = new SimpleDateFormat("yyMMdd");
     private static InetAddress inetAddress = inetAddress();
-    protected static final Locale defaultLocale = new Locale("ro-RO");
+    protected static final Locale defaultLocale = new Locale("ro", "RO");
 
     @Builder.Default
     private String id = createId();
