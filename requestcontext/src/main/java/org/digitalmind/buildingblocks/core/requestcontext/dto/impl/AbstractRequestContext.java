@@ -1,8 +1,8 @@
 package org.digitalmind.buildingblocks.core.requestcontext.dto.impl;
 
-import org.digitalmind.buildingblocks.core.requestcontext.dto.RequestContext;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import org.digitalmind.buildingblocks.core.requestcontext.dto.RequestContext;
 import org.springframework.security.core.Authentication;
 
 import java.net.InetAddress;
@@ -19,7 +19,7 @@ import java.util.*;
 public abstract class AbstractRequestContext implements RequestContext {
     private static SimpleDateFormat sdf = new SimpleDateFormat("yyMMdd");
     private static InetAddress inetAddress = inetAddress();
-    protected static Locale defaultLocale = new Locale("ro-RO");
+    protected static final Locale defaultLocale = new Locale("ro-RO");
 
     @Builder.Default
     private String id = createId();

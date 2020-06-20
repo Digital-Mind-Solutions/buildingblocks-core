@@ -1,21 +1,47 @@
 package org.digitalmind.buildingblocks.core.requestcontext.dto.impl;
 
-import lombok.*;
-import lombok.experimental.SuperBuilder;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.ToString;
+import org.springframework.security.core.Authentication;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 import java.util.Locale;
 import java.util.Map;
 
-@SuperBuilder
-@NoArgsConstructor
-@AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Getter
 public class RequestContextServlet extends AbstractRequestContext {
 
     private HttpServletRequest httpRequest;
+    private Locale locale;
+
+    public RequestContextServlet(HttpServletRequest httpRequest) {
+        this.httpRequest = httpRequest;
+        initLocale();
+    }
+
+    public RequestContextServlet(String id, Map<String, Object> details, Authentication authentication, Date date, HttpServletRequest httpRequest) {
+        super(id, details, authentication, date);
+        this.httpRequest = httpRequest;
+        initLocale();
+    }
+
+    public RequestContextServlet(AbstractRequestContextBuilder<?, ?> b, HttpServletRequest httpRequest) {
+        super(b);
+        this.httpRequest = httpRequest;
+        initLocale();
+    }
+
+    private void initLocale() {
+        try {
+            this.locale = this.httpRequest.getLocale();
+        } catch (Exception e) {
+            this.locale = defaultLocale;
+        }
+    }
 
     public String getClientIpAddress() {
         if (httpRequest == null) {
@@ -37,7 +63,7 @@ public class RequestContextServlet extends AbstractRequestContext {
 
     @Override
     public Locale getLocale() {
-        return (httpRequest.getLocale() != null) ? httpRequest.getLocale() : defaultLocale;
+        return this.locale;
     }
 
 }
