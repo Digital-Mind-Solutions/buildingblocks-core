@@ -20,4 +20,5 @@ import static org.digitalmind.buildingblocks.core.requestcontext.config.RequestC
 public class RequestContextConfig {
     private boolean enabled;
     private String cacheSpecification;
+    private String defaultLocale;
 }

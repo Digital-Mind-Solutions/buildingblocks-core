@@ -1,7 +1,10 @@
 package org.digitalmind.buildingblocks.core.requestcontext.dto.impl;
 
-import lombok.*;
-import lombok.experimental.SuperBuilder;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Synchronized;
+import lombok.ToString;
+import lombok.extern.slf4j.Slf4j;
 import org.digitalmind.buildingblocks.core.requestcontext.dto.RequestContext;
 import org.springframework.security.core.Authentication;
 
@@ -10,62 +13,79 @@ import java.net.UnknownHostException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-@SuperBuilder
-@NoArgsConstructor
-@AllArgsConstructor
+
 @EqualsAndHashCode
 @ToString(callSuper = true)
 @Getter
+@Slf4j
 public abstract class AbstractRequestContext implements RequestContext {
-    private static final SimpleDateFormat sdf = new SimpleDateFormat("yyMMdd");
-    private static final InetAddress inetAddress = inetAddress();
-    protected static final Locale defaultLocale = new Locale("ro", "RO");
 
-    @Builder.Default
-    private String id = createId();
+    private static final SimpleDateFormat sdf;
+    private static final InetAddress inetAddress;
+    private static Locale defaultLocale;
 
-    @Builder.Default
-    private Map<String, Object> details = new HashMap<>();
+    static {
+        sdf = new SimpleDateFormat("yyMMdd");
+        InetAddress ia = null;
+        try {
+            ia = InetAddress.getLocalHost();
+        } catch (UnknownHostException e) {
+            log.error("Unable to initialize InetAddress", e);
+        }
+        inetAddress = ia;
+        defaultLocale = new Locale("ro", "RO");
+    }
 
-    @Builder.Default
-    private Authentication authentication = null;
+    private final String id;
+    private final Map<String, Object> details;
+    private final Authentication authentication;
+    private final Date date;
+    private final Locale locale;
 
-    @Builder.Default
-    private Date date = new Date();
+    public AbstractRequestContext(String id, Map<String, Object> details, Authentication authentication, Date date, Locale locale) {
+        this.date = (date != null) ? date : new Date();
+        this.id = (id != null) ? id : createId(this.date);
+        this.details = createDetails(details);
+        this.authentication = authentication;
+        this.locale = (locale != null) ? locale : defaultLocale;
+    }
 
-    protected static final String createId() {
+    @Synchronized
+    public static void setDefaultLocale(Locale locale) {
+        defaultLocale = locale;
+    }
+
+    private static String createId(Date date) {
         return sdf.format(new Date()) + UUID.randomUUID().toString().replace("-", "");
     }
 
-    private static final InetAddress inetAddress() {
-        try {
-            return InetAddress.getLocalHost();
-        } catch (UnknownHostException e) {
-            return null;
-        }
+    private static Map<String, Object> createDetails(Map<String, Object> details) {
+        Map<String, Object> map = new HashMap<>((details != null) ? details : new HashMap<>());
+        map.put(SERVER_IP_ADDRESS_ATTRIBUTE, createServerIpAddress());
+        map.put(SERVER_HOST_NAME_ATTRIBUTE, createServerHostName());
+        return map;
     }
 
-    public String getServerIpAddress() {
+    private static String createServerIpAddress() {
         if (inetAddress != null) {
             return inetAddress.getHostAddress();
         }
         return SERVER_IP_ADDRESS_UNKNOWN;
     }
 
-    public String getServerHostName() {
+    private static String createServerHostName() {
         if (inetAddress != null) {
             return inetAddress.getHostName();
         }
         return SERVER_HOST_NAME_UNKNOWN;
     }
 
-    @Override
-    public Map<String, Object> getDetails() {
-        return new HashMap<String, Object>() {{
-            putAll(details);
-            put(SERVER_IP_ADDRESS_ATTRIBUTE, getServerIpAddress());
-            put(SERVER_HOST_NAME_ATTRIBUTE, getServerHostName());
-        }};
+    public String getServerIpAddress() {
+        return createServerIpAddress();
+    }
+
+    public String getServerHostName() {
+        return createServerHostName();
     }
 
 }

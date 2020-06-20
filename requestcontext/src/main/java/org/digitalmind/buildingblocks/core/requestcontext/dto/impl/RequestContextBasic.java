@@ -1,26 +1,24 @@
 package org.digitalmind.buildingblocks.core.requestcontext.dto.impl;
 
-import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
 import lombok.ToString;
-import lombok.experimental.SuperBuilder;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.Authentication;
 
+import java.util.Date;
 import java.util.Locale;
+import java.util.Map;
 
-@SuperBuilder
-@NoArgsConstructor
-//@AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-@Data
+@Getter
+@Slf4j
 public class RequestContextBasic extends AbstractRequestContext {
 
-    private Locale locale;
-
-    @Override
-    public Locale getLocale() {
-        return (locale != null) ? locale : defaultLocale;
+    public RequestContextBasic(String id, Map<String, Object> details, Authentication authentication, Date date, Locale locale) {
+        super(id, details, authentication, date, locale);
     }
+
 }
 

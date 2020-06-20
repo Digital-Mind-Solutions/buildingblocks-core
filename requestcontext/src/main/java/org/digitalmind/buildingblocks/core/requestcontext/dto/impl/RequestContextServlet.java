@@ -3,78 +3,61 @@ package org.digitalmind.buildingblocks.core.requestcontext.dto.impl;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
-import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-@Slf4j
-@SuperBuilder
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Getter
+@Slf4j
 public class RequestContextServlet extends AbstractRequestContext {
+    public static String CLIENT_IP_ADDRESS_ATTRIBUTE = "Client Ip";
+    public static String CLIENT_IP_ADDRESS_UNKNOWN = "unknown";
 
     private HttpServletRequest httpRequest;
-    private Locale locale;
-
-    public RequestContextServlet(HttpServletRequest httpRequest) {
-        super();
-        this.httpRequest = httpRequest;
-        initLocale();
-    }
 
     public RequestContextServlet(String id, Map<String, Object> details, Authentication authentication, Date date, HttpServletRequest httpRequest) {
-        super(id, details, authentication, date);
+        super(id, createDetails(details, httpRequest), authentication, date, createLocale(null, httpRequest));
         this.httpRequest = httpRequest;
-        initLocale();
     }
 
-    public RequestContextServlet(AbstractRequestContextBuilder<?, ?> b, HttpServletRequest httpRequest) {
-        super(b);
-        this.httpRequest = httpRequest;
-        initLocale();
-    }
-
-    private void initLocale() {
-        try {
-            this.locale = new Locale(this.httpRequest.getLocale().getLanguage(), this.httpRequest.getLocale().getCountry());
-            if (this.locale == null) {
-                this.locale = defaultLocale;
-            }
-        } catch (Exception e) {
-            this.locale = defaultLocale;
-        } finally {
-            log.info("RequestContextServlet({})-> initLocale() to {}", getId(), locale);
+    private static Locale createLocale(Locale locale, HttpServletRequest httpRequest) {
+        if (locale != null) {
+            return locale;
         }
-    }
-
-    public String getClientIpAddress() {
         if (httpRequest == null) {
             return null;
+        }
+        if (httpRequest.getLocale() == null) {
+            return null;
+        }
+        return httpRequest.getLocale();
+    }
+
+    private static String createClientIpAddress(HttpServletRequest httpRequest) {
+        if (httpRequest == null) {
+            return CLIENT_IP_ADDRESS_UNKNOWN;
         }
         String ipAddress = httpRequest.getHeader("X-FORWARDED-FOR");
         if (ipAddress == null) {
             ipAddress = httpRequest.getRemoteAddr();
         }
+        if (ipAddress == null) {
+            ipAddress = CLIENT_IP_ADDRESS_UNKNOWN;
+        }
         return ipAddress;
     }
 
-    @Override
-    public Map<String, Object> getDetails() {
-        Map details = super.getDetails();
-        details.put("Client Ip Address", getClientIpAddress());
-        return details;
-    }
-
-    @Override
-    public Locale getLocale() {
-        return this.locale;
+    private static Map<String, Object> createDetails(Map<String, Object> details, HttpServletRequest httpRequest) {
+        Map<String, Object> map = new HashMap<>((details != null) ? details : new HashMap<>());
+        map.put(CLIENT_IP_ADDRESS_ATTRIBUTE, createClientIpAddress(httpRequest));
+        return map;
     }
 
 }
-
