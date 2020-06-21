@@ -52,7 +52,13 @@ public class RequestContextServiceImpl implements RequestContextService {
     @PostConstruct
     public void postConstruct() {
         if (config != null && !StringUtils.isEmpty(config.getDefaultLocale())) {
-            String[] localeItems = config.getDefaultLocale().split(",");
+            String[] localeItems = null;
+            if (config.getDefaultLocale().contains("-")) {
+                localeItems = config.getDefaultLocale().split("-");
+            }
+            if (config.getDefaultLocale().contains("_")) {
+                localeItems = config.getDefaultLocale().split("_");
+            }
             if (localeItems.length == 1) {
                 AbstractRequestContext.setDefaultLocale(new Locale(localeItems[0]));
             }
