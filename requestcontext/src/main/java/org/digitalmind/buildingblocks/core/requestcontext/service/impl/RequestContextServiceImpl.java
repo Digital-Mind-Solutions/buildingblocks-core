@@ -12,6 +12,7 @@ import org.digitalmind.buildingblocks.core.requestcontext.dto.impl.RequestContex
 import org.digitalmind.buildingblocks.core.requestcontext.dto.impl.RequestContextServlet;
 import org.digitalmind.buildingblocks.core.requestcontext.exception.RequestContextException;
 import org.digitalmind.buildingblocks.core.requestcontext.service.RequestContextService;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -84,7 +85,8 @@ public class RequestContextServiceImpl implements RequestContextService {
 
     @Override
     public RequestContext create(HttpServletRequest httpRequest, Authentication authentication, Map<String, Object> details) {
-        RequestContext requestContext = new RequestContextServlet(null, details, authentication, null, httpRequest);
+        Locale locale = null;
+        RequestContext requestContext = new RequestContextServlet(null, details, authentication, null, LocaleContextHolder.getLocale(), httpRequest);
         return getAndCache(requestContext);
     }
 
@@ -105,7 +107,7 @@ public class RequestContextServiceImpl implements RequestContextService {
     }
 
     private RequestContext createInternal(String id, Map<String, Object> details) {
-        RequestContext requestContext = new RequestContextBasic(id, details, null, null, null);
+        RequestContext requestContext = new RequestContextBasic(id, details, null, null, LocaleContextHolder.getLocale());
         //RequestContextHolder.setContext(requestContext);
         return requestContext;
     }

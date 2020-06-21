@@ -22,8 +22,8 @@ public class RequestContextServlet extends AbstractRequestContext {
 
     private HttpServletRequest httpRequest;
 
-    public RequestContextServlet(String id, Map<String, Object> details, Authentication authentication, Date date, HttpServletRequest httpRequest) {
-        super(id, createDetails(details, httpRequest), authentication, date, createLocale(null, httpRequest));
+    public RequestContextServlet(String id, Map<String, Object> details, Authentication authentication, Date date, Locale locale, HttpServletRequest httpRequest) {
+        super(id, createDetails(details, httpRequest), authentication, date, createLocale(locale, httpRequest));
         this.httpRequest = httpRequest;
     }
 
