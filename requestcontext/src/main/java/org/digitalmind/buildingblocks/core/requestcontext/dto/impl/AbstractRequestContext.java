@@ -89,7 +89,7 @@ public abstract class AbstractRequestContext implements RequestContext {
     }
 
     public Locale getLocale() {
-        return this.locale != null ? this.locale : defaultLocale;
+        return (this.locale != null) ? this.locale : defaultLocale;
     }
 
 }
