@@ -88,4 +88,8 @@ public abstract class AbstractRequestContext implements RequestContext {
         return createServerHostName();
     }
 
+    public Locale getLocale() {
+        return this.locale != null ? this.locale : defaultLocale;
+    }
+
 }
