@@ -8,8 +8,8 @@ public interface SpringBeanUtil {
 
     Object getBean(String name);
 
-    Object getBean(Class clazz);
-
+    //Object getBean(Class clazz);
+    <T> T getBean(Class<T> type);
 
     <T> T getBean(String name, Class<T> type);
 

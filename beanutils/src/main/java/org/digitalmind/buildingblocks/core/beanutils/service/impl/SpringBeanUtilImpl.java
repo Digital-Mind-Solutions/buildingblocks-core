@@ -40,8 +40,8 @@ public class SpringBeanUtilImpl implements SpringBeanUtil {
     }
 
     @Override
-    public Object getBean(Class clazz) {
-        return context.getBean(clazz);
+    public <T> T  getBean(Class<T> type) {
+        return context.getBean(type);
     }
 
     @Override
