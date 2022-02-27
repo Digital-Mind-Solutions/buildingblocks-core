@@ -14,6 +14,8 @@ public interface SpelService {
 
     public Object getValue(Expression expression, EvaluationContext context);
 
+    public Object getValueNewTransaction(String expression, EvaluationContext context) throws ExecutionException;
+
     public void setValue(String expression, EvaluationContext context, Object value) throws ExecutionException;
 
     public void setValue(Expression expression, EvaluationContext context, Object value);
