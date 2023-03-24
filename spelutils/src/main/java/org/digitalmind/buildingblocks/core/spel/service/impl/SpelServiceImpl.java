@@ -13,6 +13,8 @@ import org.springframework.expression.ExpressionParser;
 import org.springframework.expression.spel.standard.SpelExpressionParser;
 import org.springframework.expression.spel.support.StandardEvaluationContext;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
@@ -56,6 +58,13 @@ public class SpelServiceImpl implements SpelService {
 
     public Expression getExpression(String expression) throws ExecutionException {
         return this.cacheExpressionParser.get(expression);
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public Object getValueNewTransaction(String expression, EvaluationContext context) throws ExecutionException {
+        Expression compiledExpression = getExpression(expression);
+        return getValue(compiledExpression, context);
     }
 
     @Override

@@ -17,8 +17,6 @@ import java.util.Map;
 @Getter
 @Slf4j
 public class RequestContextServlet extends AbstractRequestContext {
-    public static String CLIENT_IP_ADDRESS_ATTRIBUTE = "Client Ip";
-    public static String CLIENT_IP_ADDRESS_UNKNOWN = "unknown";
 
     private HttpServletRequest httpRequest;
 
@@ -40,11 +38,22 @@ public class RequestContextServlet extends AbstractRequestContext {
         return httpRequest.getLocale();
     }
 
+    private static String createClientXForwarded(HttpServletRequest httpRequest) {
+        if (httpRequest == null) {
+            return CLIENT_FORWARD_LIST_UNKNOWN;
+        }
+        String xFwd = httpRequest.getHeader("X-FORWARDED-FOR");
+        if (xFwd == null) {
+            xFwd = CLIENT_FORWARD_LIST_UNKNOWN;
+        }
+        return xFwd;
+    }
+
     private static String createClientIpAddress(HttpServletRequest httpRequest) {
         if (httpRequest == null) {
             return CLIENT_IP_ADDRESS_UNKNOWN;
         }
-        String ipAddress = httpRequest.getHeader("X-FORWARDED-FOR");
+        String ipAddress = httpRequest.getHeader("Client IP");
         if (ipAddress == null) {
             ipAddress = httpRequest.getRemoteAddr();
         }
@@ -57,6 +66,7 @@ public class RequestContextServlet extends AbstractRequestContext {
     private static Map<String, Object> createDetails(Map<String, Object> details, HttpServletRequest httpRequest) {
         Map<String, Object> map = new HashMap<>((details != null) ? details : new HashMap<>());
         map.put(CLIENT_IP_ADDRESS_ATTRIBUTE, createClientIpAddress(httpRequest));
+        map.put(CLIENT_FORWARD_LIST_ATTRIBUTE, createClientXForwarded(httpRequest));
         return map;
     }
 
