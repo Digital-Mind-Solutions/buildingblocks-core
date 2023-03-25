@@ -112,9 +112,6 @@ public interface ParametersHelperMethods {
             if (parameter.getValue() instanceof Collection) {
                 return ((Collection) parameter.getValue()).stream().filter(stringItem -> (String.valueOf(stringItem).indexOf(value) >= 0)).findAny().isPresent();
             }
-            if (parameter.getValue() instanceof String) {
-                return ((String) parameter.getValue()).indexOf(value) >= 0;
-            }
         }
         return false;
     }
