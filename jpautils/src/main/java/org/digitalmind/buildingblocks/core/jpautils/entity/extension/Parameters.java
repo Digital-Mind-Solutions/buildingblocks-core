@@ -1,7 +1,7 @@
 package org.digitalmind.buildingblocks.core.jpautils.entity.extension;
 
 
-import io.swagger.annotations.ApiModel;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -15,7 +15,7 @@ import java.util.Collection;
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 
-@ApiModel(value = "Parameters", description = "The parameters.")
+@Schema(name = "Parameters", description = "The parameters.")
 public class Parameters extends ArrayList<Parameter> {
 
     public Parameters() {

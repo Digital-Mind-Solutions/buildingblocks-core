@@ -16,7 +16,7 @@ import org.hibernate.annotations.TypeDef;
 import org.hibernate.annotations.TypeDefs;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -33,7 +33,7 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString(callSuper = true)
-@ApiModel(value = "Configuration", description = "Configuration entity.")
+@Schema(value = "Configuration", description = "Configuration entity.")
 @JsonPropertyOrder(
         {
                 "id",
@@ -52,22 +52,22 @@ public class Configuration extends ContextVersionableAuditModel implements IdMod
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", unique = true, nullable = false)
-    @ApiModelProperty(value = "Unique id of the configuration", required = false)
+    @SchemaProperty(name = "Unique id of the configuration", required = false)
     private Long id;
 
     @NotNull
     @Column(name = "module")
-    @ApiModelProperty(value = "Configuration module", required = false)
+    @SchemaProperty(name = "Configuration module", required = false)
     private String module;
 
     @NotNull
     @Column(name = "section")
-    @ApiModelProperty(value = "Configuration module section", required = false)
+    @SchemaProperty(name = "Configuration module section", required = false)
     private String section;
 
     @NotNull
     @Column(name = "description", length = 1000)
-    @ApiModelProperty(value = "Configuration module description", required = false)
+    @SchemaProperty(name = "Configuration module description", required = false)
     private String description;
 
 

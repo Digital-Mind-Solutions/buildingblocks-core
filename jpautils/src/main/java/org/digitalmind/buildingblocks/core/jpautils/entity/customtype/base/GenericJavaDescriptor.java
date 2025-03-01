@@ -18,7 +18,7 @@ import java.io.IOException;
 import java.sql.Clob;
 import java.sql.SQLException;
 
-public class GenericJavaDescriptor<J> extends AbstractTypeDescriptor<J> {
+public class GenericJavaDescriptor<J> extends TypeDescriptor<J> {
 
     public static final ObjectMapper objectMapper = initializeObjectMapper();
 

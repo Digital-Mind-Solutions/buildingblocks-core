@@ -21,22 +21,22 @@ import java.util.Date;
                 "createdAt", "createdBy", "updatedAt", "updatedBy"
         }
 )
-@ApiModel(value = "AuditDTO", description = "The base auditable object.")
+@Schema(value = "AuditDTO", description = "The base auditable object.")
 public abstract class AuditDTO extends BaseDTO {
 
-    @ApiModelProperty(value = "Date when object was created", required = false, readOnly = true, accessMode = ApiModelProperty.AccessMode.READ_ONLY)
+    @SchemaProperty(name = "Date when object was created", required = false, readOnly = true, accessMode = ApiModelProperty.AccessMode.READ_ONLY)
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private Date createdAt;
 
-    @ApiModelProperty(value = "Person that created the object", required = false, readOnly = true, accessMode = ApiModelProperty.AccessMode.READ_ONLY)
+    @SchemaProperty(name = "Person that created the object", required = false, readOnly = true, accessMode = ApiModelProperty.AccessMode.READ_ONLY)
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private String createdBy;
 
-    @ApiModelProperty(value = "Date when object was updated", required = false, readOnly = true, accessMode = ApiModelProperty.AccessMode.READ_ONLY)
+    @SchemaProperty(name = "Date when object was updated", required = false, readOnly = true, accessMode = ApiModelProperty.AccessMode.READ_ONLY)
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private Date updatedAt;
 
-    @ApiModelProperty(value = "Person that updated the object", required = false, readOnly = true, accessMode = ApiModelProperty.AccessMode.READ_ONLY)
+    @SchemaProperty(name = "Person that updated the object", required = false, readOnly = true, accessMode = ApiModelProperty.AccessMode.READ_ONLY)
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private String updatedBy;
 }

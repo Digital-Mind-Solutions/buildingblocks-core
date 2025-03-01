@@ -5,8 +5,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.SchemaProperty;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -20,7 +20,7 @@ import java.util.Locale;
 @Data
 @ToString(callSuper = true)
 @EqualsAndHashCode
-@ApiModel(value = "Parameter", description = "Parameter definition.")
+@Schema(name = "Parameter", description = "Parameter definition.")
 @JsonPropertyOrder(
         {
                 "name",
@@ -31,26 +31,26 @@ import java.util.Locale;
 )
 public class Parameter {
 
-    @ApiModelProperty(value = "The parameter name", required = true)
+    @SchemaProperty(name = "The parameter name")
     private String name;
 
-    @ApiModelProperty(value = "The parameter type", required = true)
+    @SchemaProperty(name = "The parameter type")
     @Builder.Default
     private ParameterType type = ParameterType.CONSTANT;
 
-    @ApiModelProperty(value = "The parameter source", required = false)
+    @SchemaProperty(name = "The parameter source")
     @Builder.Default
     private ParameterSource source = ParameterSource.INTERN;
 
-    @ApiModelProperty(value = "The parameter order", required = false)
+    @SchemaProperty(name = "The parameter order")
     @Builder.Default
     private int orderId = Integer.MAX_VALUE;
 
-    @ApiModelProperty(value = "The parameter contains a conversion format (if required)", required = false)
+    @SchemaProperty(name = "The parameter contains a conversion format (if required)")
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private String format;
 
-    @ApiModelProperty(value = "The parameter icon", required = false)
+    @SchemaProperty(name = "The parameter icon")
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private String icon;
 
@@ -58,7 +58,7 @@ public class Parameter {
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private Class<?> dataClass;
 
-    @ApiModelProperty(value = "The parameter value", required = false)
+    @SchemaProperty(name = "The parameter value")
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private Object value;
 

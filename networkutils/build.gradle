@@ -1,26 +1,21 @@
 plugins {
     id 'java-library'
-    id 'org.springframework.boot' version '2.1.12.RELEASE'
-    id 'io.spring.dependency-management' version '1.0.7.RELEASE'
+    id 'org.springframework.boot' version '3.4.3'
+    id 'io.spring.dependency-management' version '1.1.7'
     id 'maven-publish'
 }
 group 'org.digitalmind.buildingblocks.core'
-version '1.0.0'
+version '2.0.0'
 
 ext {
-    lombokVersion = '1.18.12'
-    springfoxVersion = '2.9.2'
-    swaggerVersion = '1.6.0'
-    swaggerCodegenVersion = '2.4.0'
+    lombokVersion = '1.18.32'
+    springOpenapiVersion = '2.6.0'
+    swaggerAnnotationsVersion = '2.2.25'
 }
-dependencyManagement {
-    imports {
-        mavenBom 'org.springframework.cloud:spring-cloud-dependencies:Greenwich.SR5'
-    }
-}
+
 java {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
+    sourceCompatibility = "21"
+    targetCompatibility = "21"
 }
 bootJar {
     enabled = false

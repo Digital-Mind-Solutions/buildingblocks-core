@@ -3,7 +3,7 @@ package org.digitalmind.eventorchestrator.converter;
 import lombok.extern.slf4j.Slf4j;
 import org.digitalmind.eventorchestrator.converter.base.JpaGenericConverter;
 
-import javax.persistence.Converter;
+import jakarta.persistence.Converter;
 import java.util.LinkedHashMap;
 import java.util.Map;
 

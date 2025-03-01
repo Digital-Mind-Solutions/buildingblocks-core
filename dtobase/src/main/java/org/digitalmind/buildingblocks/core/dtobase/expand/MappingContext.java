@@ -25,16 +25,16 @@ import static org.digitalmind.buildingblocks.core.dtobase.expand.MappingContext.
                 "include", "exclude"
         }
 )
-@ApiModel(value = "Expand", description = "The expand directive that is driving the DTO projections.")
+@Schema(value = "Expand", description = "The expand directive that is driving the DTO projections.")
 public class MappingContext {
 
     private static String MATCH_ANY = "*";
 
-    @ApiModelProperty(value = "list of expand path attributes to be included in the projection", required = false)
+    @SchemaProperty(name = "list of expand path attributes to be included in the projection", required = false)
     @Singular
     private SortedSet<String> includes;
 
-    @ApiModelProperty(value = "list of expand path attributes to be excluded from the projection", required = false)
+    @SchemaProperty(name = "list of expand path attributes to be excluded from the projection", required = false)
     @Singular
     private SortedSet<String> excludes;
 
