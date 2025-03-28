@@ -1,4 +1,4 @@
-package org.digitalmind.eventorchestrator.converter.base;
+package org.digitalmind.buildingblocks.core.jpautils.converter.policy.base;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;

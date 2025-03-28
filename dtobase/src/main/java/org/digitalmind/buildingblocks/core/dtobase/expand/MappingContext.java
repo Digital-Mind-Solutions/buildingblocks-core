@@ -1,8 +1,7 @@
 package org.digitalmind.buildingblocks.core.dtobase.expand;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.apache.commons.lang3.StringUtils;
@@ -25,16 +24,16 @@ import static org.digitalmind.buildingblocks.core.dtobase.expand.MappingContext.
                 "include", "exclude"
         }
 )
-@Schema(value = "Expand", description = "The expand directive that is driving the DTO projections.")
+@Schema(name = "Expand", description = "The expand directive that is driving the DTO projections.")
 public class MappingContext {
 
     private static String MATCH_ANY = "*";
 
-    @SchemaProperty(name = "list of expand path attributes to be included in the projection", required = false)
+    @Schema(name = "list of expand path attributes to be included in the projection", required = false)
     @Singular
     private SortedSet<String> includes;
 
-    @SchemaProperty(name = "list of expand path attributes to be excluded from the projection", required = false)
+    @Schema(name = "list of expand path attributes to be excluded from the projection", required = false)
     @Singular
     private SortedSet<String> excludes;
 

@@ -2,8 +2,7 @@ package org.digitalmind.buildingblocks.core.dtobase;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -21,22 +20,22 @@ import java.util.Date;
                 "createdAt", "createdBy", "updatedAt", "updatedBy"
         }
 )
-@Schema(value = "AuditDTO", description = "The base auditable object.")
+@Schema(name = "AuditDTO", description = "The base auditable object.")
 public abstract class AuditDTO extends BaseDTO {
 
-    @SchemaProperty(name = "Date when object was created", required = false, readOnly = true, accessMode = ApiModelProperty.AccessMode.READ_ONLY)
+    @Schema(name = "Date when object was created", required = false, readOnly = true, accessMode = Schema.AccessMode.READ_ONLY)
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private Date createdAt;
 
-    @SchemaProperty(name = "Person that created the object", required = false, readOnly = true, accessMode = ApiModelProperty.AccessMode.READ_ONLY)
+    @Schema(name = "Person that created the object", required = false, readOnly = true, accessMode = Schema.AccessMode.READ_ONLY)
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private String createdBy;
 
-    @SchemaProperty(name = "Date when object was updated", required = false, readOnly = true, accessMode = ApiModelProperty.AccessMode.READ_ONLY)
+    @Schema(name = "Date when object was updated", required = false, readOnly = true, accessMode = Schema.AccessMode.READ_ONLY)
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private Date updatedAt;
 
-    @SchemaProperty(name = "Person that updated the object", required = false, readOnly = true, accessMode = ApiModelProperty.AccessMode.READ_ONLY)
+    @Schema(name = "Person that updated the object", required = false, readOnly = true, accessMode = Schema.AccessMode.READ_ONLY)
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private String updatedBy;
 }
