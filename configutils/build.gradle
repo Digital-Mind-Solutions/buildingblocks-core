@@ -12,6 +12,7 @@ ext {
     springOpenapiVersion = '2.6.0'
     swaggerAnnotationsVersion = '2.2.25'
     jacksonDatabindVersion = '0.2.3'
+    guavaVersion = '33.4.6-jre'
 }
 java {
     sourceCompatibility = "21"
@@ -38,6 +39,8 @@ dependencies {
     implementation "org.springdoc:springdoc-openapi-starter-webmvc-ui:${springOpenapiVersion}"
     implementation "org.springdoc:springdoc-openapi-starter-webmvc-api:${springOpenapiVersion}"
     implementation "org.openapitools:jackson-databind-nullable:${jacksonDatabindVersion}"
+
+    implementation "com.google.guava:guava:${guavaVersion}"
 }
 
 publishing {

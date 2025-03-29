@@ -31,26 +31,26 @@ import java.util.Locale;
 )
 public class Parameter {
 
-    @SchemaProperty(name = "The parameter name")
+    @Schema(name = "The parameter name")
     private String name;
 
-    @SchemaProperty(name = "The parameter type")
+    @Schema(name = "The parameter type")
     @Builder.Default
     private ParameterType type = ParameterType.CONSTANT;
 
-    @SchemaProperty(name = "The parameter source")
+    @Schema(name = "The parameter source")
     @Builder.Default
     private ParameterSource source = ParameterSource.INTERN;
 
-    @SchemaProperty(name = "The parameter order")
+    @Schema(name = "The parameter order")
     @Builder.Default
     private int orderId = Integer.MAX_VALUE;
 
-    @SchemaProperty(name = "The parameter contains a conversion format (if required)")
+    @Schema(name = "The parameter contains a conversion format (if required)")
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private String format;
 
-    @SchemaProperty(name = "The parameter icon")
+    @Schema(name = "The parameter icon")
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private String icon;
 
@@ -58,7 +58,7 @@ public class Parameter {
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private Class<?> dataClass;
 
-    @SchemaProperty(name = "The parameter value")
+    @Schema(name = "The parameter value")
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private Object value;
 
