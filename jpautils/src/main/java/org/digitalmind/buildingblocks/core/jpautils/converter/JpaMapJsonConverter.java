@@ -14,7 +14,7 @@ import java.util.LinkedHashMap;
 @Converter
 public class JpaMapJsonConverter extends JpaGenericConverter<LinkedHashMap<String, Object>> {
 
-    public JpaMapJsonConverter(JpaAbstractEncryptionPolicy encryptionPolicy, JpaAbstractSerializationPolicy serializationPolicy) {
+    public JpaMapJsonConverter(JpaAbstractEncryptionPolicy encryptionPolicy, JpaAbstractSerializationPolicy<LinkedHashMap<String, Object>> serializationPolicy) {
         super(encryptionPolicy, serializationPolicy);
     }
 
