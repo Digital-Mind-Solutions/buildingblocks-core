@@ -2,7 +2,9 @@ package org.digitalmind.buildingblocks.core.jpautils;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import org.digitalmind.buildingblocks.core.jpautils.converter.JpaJsonConverter;
+import org.digitalmind.buildingblocks.core.jpautils.converter.JpaJsonObjectJsonConverter;
 import org.digitalmind.buildingblocks.core.jpautils.converter.JpaMapJsonConverter;
+import org.digitalmind.buildingblocks.core.jpautils.converter.JpaMapStringObjectJsonConverter;
 import org.digitalmind.buildingblocks.core.jpautils.converter.policy.JpaJsonSerializationPolicy;
 import org.digitalmind.buildingblocks.core.jpautils.converter.policy.JpaNoEncryptionPolicy;
 import org.digitalmind.buildingblocks.core.jpautils.entity.extension.Parameter;
@@ -30,6 +32,11 @@ public class Main {
                 );
         System.out.println(jpaMapJsonConverter.toString());
 
+
+        JpaJsonObjectJsonConverter jpaJsonObjectJsonConverter = new JpaJsonObjectJsonConverter();
+        JpaMapStringObjectJsonConverter jpaMapStringObjectJsonConverter = new JpaMapStringObjectJsonConverter();
+
+        System.out.println("done");
 
     }
 

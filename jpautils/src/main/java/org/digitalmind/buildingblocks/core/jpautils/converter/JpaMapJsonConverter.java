@@ -9,7 +9,7 @@ import org.digitalmind.buildingblocks.core.jpautils.converter.policy.base.JpaAbs
 import java.util.LinkedHashMap;
 
 @Slf4j
-@Converter
+//@Converter
 public class JpaMapJsonConverter<T> extends JpaGenericConverter<LinkedHashMap<String, T>> {
 
     public JpaMapJsonConverter(JpaAbstractEncryptionPolicy encryptionPolicy, JpaAbstractSerializationPolicy<LinkedHashMap<String, T>> serializationPolicy) {
