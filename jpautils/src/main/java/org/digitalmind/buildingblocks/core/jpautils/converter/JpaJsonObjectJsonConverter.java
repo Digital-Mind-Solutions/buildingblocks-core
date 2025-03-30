@@ -17,7 +17,7 @@ public class JpaJsonObjectJsonConverter extends JpaJsonConverter<Object> {
     }
 
     public JpaJsonObjectJsonConverter() {
-        this(
+        super(
                 JpaNoEncryptionPolicy.INSTANCE,
                 new JpaJsonSerializationPolicy<>(
                         Object.class,
