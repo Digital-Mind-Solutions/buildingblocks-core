@@ -5,8 +5,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.digitalmind.buildingblocks.core.jpautils.converter.exception.JpaConverterRuntimeException;
 import org.digitalmind.buildingblocks.core.jpautils.converter.exception.JpaEncryptionConverterException;
 import org.digitalmind.buildingblocks.core.jpautils.converter.exception.JpaSerializationConverterException;
-import org.digitalmind.buildingblocks.core.jpautils.converter.policy.JpaJsonSerializationPolicy;
-import org.digitalmind.buildingblocks.core.jpautils.converter.policy.JpaNoEncryptionPolicy;
 import org.digitalmind.buildingblocks.core.jpautils.converter.policy.base.JpaAbstractEncryptionPolicy;
 import org.digitalmind.buildingblocks.core.jpautils.converter.policy.base.JpaAbstractSerializationPolicy;
 
@@ -20,16 +18,10 @@ public abstract class JpaGenericConverter<C> implements AttributeConverter<C, St
 
     public JpaGenericConverter(
             JpaAbstractEncryptionPolicy encryptionPolicy,
-            JpaAbstractSerializationPolicy serializationPolicy
+            JpaAbstractSerializationPolicy<C> serializationPolicy
     ) {
-        this.encryptionPolicy =
-                (encryptionPolicy == null)
-                        ? JpaNoEncryptionPolicy.INSTANCE
-                        : encryptionPolicy;
-        this.serializationPolicy =
-                (serializationPolicy == null)
-                        ? new JpaJsonSerializationPolicy<C>()
-                        : serializationPolicy;
+        this.encryptionPolicy = encryptionPolicy;
+        this.serializationPolicy = serializationPolicy;
     }
 
     public void setEncryptionPolicy(JpaAbstractEncryptionPolicy encryptionPolicy) {
