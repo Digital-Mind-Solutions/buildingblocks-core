@@ -14,8 +14,16 @@ import org.digitalmind.buildingblocks.core.jpautils.converter.policy.base.JpaAbs
 public class JpaJsonConverter extends JpaGenericConverter<Object> {
     public JpaJsonConverter(JpaAbstractEncryptionPolicy encryptionPolicy, JpaAbstractSerializationPolicy serializationPolicy) {
         super(
+                encryptionPolicy,
+                serializationPolicy
+        );
+    }
+
+    public JpaJsonConverter() {
+        this(
                 JpaNoEncryptionPolicy.INSTANCE,
                 new JpaJsonSerializationPolicy<Object>()
         );
     }
+
 }
