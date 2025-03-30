@@ -16,13 +16,16 @@ import java.util.LinkedHashMap;
 public class Main {
 
     public static void main(String[] args) {
+        /*
         JpaJsonConverter<Parameter> jpaJsonConverter =
                 new JpaJsonConverter<Parameter>(
                         JpaNoEncryptionPolicy.INSTANCE,
                         new JpaJsonSerializationPolicy<Parameter>(Parameter.class, JpaJsonSerializationPolicy.OBJECT_MAPPER_TYPE)
                         );
         System.out.println(jpaJsonConverter.toString());
+         */
 
+        /*
         TypeReference<LinkedHashMap<String, Parameter>> typeReference = new TypeReference<>() {};
         Type type = typeReference.getType();
         JpaMapJsonConverter<Parameter> jpaMapJsonConverter =
@@ -31,7 +34,7 @@ public class Main {
                         new JpaJsonSerializationPolicy<LinkedHashMap<String, Parameter>>(type, JpaJsonSerializationPolicy.OBJECT_MAPPER_TYPE)
                 );
         System.out.println(jpaMapJsonConverter.toString());
-
+        */
 
         JpaJsonObjectJsonConverter jpaJsonObjectJsonConverter = new JpaJsonObjectJsonConverter();
         JpaMapStringObjectJsonConverter jpaMapStringObjectJsonConverter = new JpaMapStringObjectJsonConverter();

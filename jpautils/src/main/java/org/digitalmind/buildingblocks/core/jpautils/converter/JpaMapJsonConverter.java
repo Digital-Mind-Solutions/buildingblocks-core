@@ -10,7 +10,7 @@ import java.util.LinkedHashMap;
 
 @Slf4j
 //@Converter
-public class JpaMapJsonConverter<T> extends JpaGenericConverter<LinkedHashMap<String, T>> {
+public abstract class JpaMapJsonConverter<T> extends JpaGenericConverter<LinkedHashMap<String, T>> {
 
     public JpaMapJsonConverter(JpaAbstractEncryptionPolicy encryptionPolicy, JpaAbstractSerializationPolicy<LinkedHashMap<String, T>> serializationPolicy) {
         super(encryptionPolicy, serializationPolicy);

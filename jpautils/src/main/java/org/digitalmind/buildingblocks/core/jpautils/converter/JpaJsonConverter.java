@@ -9,7 +9,7 @@ import org.digitalmind.buildingblocks.core.jpautils.converter.policy.base.JpaAbs
 
 @Slf4j
 //@Converter
-public class JpaJsonConverter<T> extends JpaGenericConverter<T> {
+public abstract class JpaJsonConverter<T> extends JpaGenericConverter<T> {
     public JpaJsonConverter(JpaAbstractEncryptionPolicy encryptionPolicy, JpaAbstractSerializationPolicy<T> serializationPolicy) {
         super(
                 encryptionPolicy,
