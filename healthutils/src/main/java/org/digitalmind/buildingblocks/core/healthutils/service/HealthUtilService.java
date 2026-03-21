@@ -3,8 +3,8 @@ package org.digitalmind.buildingblocks.core.healthutils.service;
 import org.digitalmind.buildingblocks.core.healthutils.dto.*;
 import org.digitalmind.buildingblocks.core.healthutils.function.HealthIndicatorFunction;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.actuate.health.Health;
-import org.springframework.boot.actuate.health.Status;
+import org.springframework.boot.health.contributor.Health;
+import org.springframework.boot.health.contributor.Status;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +18,7 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.net.URI;
 
-import static org.springframework.boot.actuate.health.Status.DOWN;
+import static org.springframework.boot.health.contributor.Status.DOWN;
 
 @Service
 @Slf4j
@@ -178,7 +178,7 @@ public class HealthUtilService {
         healthBuilder.withDetail("destination", webHealthRequest.getUrl());
         try {
             URI uri = new URI(webHealthRequest.getUrl());
-            HttpEntity requestEntity = new HttpEntity<>(null, null);
+            HttpEntity<?> requestEntity = HttpEntity.EMPTY;
             ResponseEntity<String> result = webHealthRequest.getRestTemplate().exchange(uri, HttpMethod.GET, requestEntity, String.class);
 
             if (result.getStatusCode().value() != webHealthRequest.getStatus()) {

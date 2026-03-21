@@ -6,18 +6,15 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import org.digitalmind.buildingblocks.core.jpautils.converter.ParametersAttributeConverter;
 import org.digitalmind.buildingblocks.core.jpautils.entity.ContextVersionableAuditModel;
 import org.digitalmind.buildingblocks.core.jpautils.entity.IdModel;
-import org.digitalmind.buildingblocks.core.jpautils.entity.customtype.JpaParametersType;
 import org.digitalmind.buildingblocks.core.jpautils.entity.extension.Parameters;
 import org.digitalmind.buildingblocks.core.jpautils.entity.util.ParametersHelperMethods;
-import org.hibernate.annotations.Type;
-import org.hibernate.annotations.TypeDef;
-import org.hibernate.annotations.TypeDefs;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = Configuration.TABLE_NAME,
@@ -42,9 +39,6 @@ import javax.validation.constraints.NotNull;
                 "createdAt", "createdBy", "updatedAt", "updatedBy", "contextId"
         }
 )
-@TypeDefs({
-        @TypeDef(name = "JpaParametersType", defaultForType = Parameters.class, typeClass = JpaParametersType.class)
-})
 public class Configuration extends ContextVersionableAuditModel implements IdModel<Long>, ParametersHelperMethods {
 
     public static final String TABLE_NAME = "configuration";
@@ -72,7 +66,7 @@ public class Configuration extends ContextVersionableAuditModel implements IdMod
 
 
     @Column(name = "parameters", length = 4000)
-    @Type(type = "JpaParametersType")
+    @Convert(converter = ParametersAttributeConverter.class)
     private Parameters parameters;
 
 }

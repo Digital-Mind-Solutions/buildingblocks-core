@@ -3,7 +3,7 @@ package org.digitalmind.buildingblocks.core.requestcontext.service;
 import org.digitalmind.buildingblocks.core.requestcontext.dto.RequestContext;
 import org.springframework.security.core.Authentication;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 public interface RequestContextService {

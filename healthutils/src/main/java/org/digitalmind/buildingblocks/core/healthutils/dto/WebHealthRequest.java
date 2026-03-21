@@ -3,7 +3,7 @@ package org.digitalmind.buildingblocks.core.healthutils.dto;
 import org.digitalmind.buildingblocks.core.healthutils.service.HealthUtilService;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
-import org.springframework.boot.actuate.health.Health;
+import org.springframework.boot.health.contributor.Health;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.client.RestTemplate;
 

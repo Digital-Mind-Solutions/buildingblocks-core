@@ -1,24 +1,19 @@
 plugins {
     id 'java-library'
-    id 'org.springframework.boot' version '2.1.12.RELEASE'
-    id 'io.spring.dependency-management' version '1.0.7.RELEASE'
     id 'maven-publish'
 }
 group 'org.digitalmind.buildingblocks.core'
-version '1.0.1'
 
 ext {
-    lombokVersion = '1.18.12'
+    lombokVersion = '1.18.44'
     springfoxVersion = '2.9.2'
     swaggerVersion = '1.6.0'
     swaggerCodegenVersion = '2.4.0'
 }
 java {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
-}
-bootJar {
-    enabled = false
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(25)
+    }
 }
 jar {
     archiveBaseName = "requestcontext"

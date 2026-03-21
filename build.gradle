@@ -1,8 +1,13 @@
+plugins {
+    id 'io.spring.dependency-management' version '1.1.7' apply false
+}
+
 allprojects {
     group = 'org.digitalmind.buildingblocks.core'
-    version = '1.0.0'
+    version = '4.0.0'
 
     repositories {
+        mavenLocal()
         mavenCentral()
         maven {
             name = "digitalmind"
@@ -12,5 +17,28 @@ allprojects {
                 password = project.findProperty("dm.ghub.key") ?: System.getenv("DM_GITHUB_TOKEN")
             }
         }
+    }
+}
+
+subprojects {
+    apply plugin: 'java-library'
+    apply plugin: 'maven-publish'
+    apply plugin: 'io.spring.dependency-management'
+
+    java {
+        toolchain {
+            languageVersion = JavaLanguageVersion.of(25)
+        }
+    }
+
+    dependencyManagement {
+        imports {
+            mavenBom "org.springframework.boot:spring-boot-dependencies:4.0.3"
+        }
+    }
+
+    tasks.withType(JavaCompile).configureEach {
+        options.encoding = 'UTF-8'
+        options.release = 25
     }
 }
