@@ -14,6 +14,9 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
+
 import java.util.Date;
 
 @MappedSuperclass
@@ -32,7 +35,7 @@ import java.util.Date;
 @ToString(callSuper = false)
 public abstract class AuditModel {
 
-    @Temporal(TemporalType.TIMESTAMP)
+    @JdbcTypeCode(SqlTypes.TIMESTAMP)
     @Column(name = "created_at", nullable = false, updatable = false)
     @CreatedDate
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
@@ -43,7 +46,7 @@ public abstract class AuditModel {
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private String createdBy;
 
-    @Temporal(TemporalType.TIMESTAMP)
+    @JdbcTypeCode(SqlTypes.TIMESTAMP)
     @Column(name = "updated_at", nullable = true, updatable = true)
     @LastModifiedDate
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
