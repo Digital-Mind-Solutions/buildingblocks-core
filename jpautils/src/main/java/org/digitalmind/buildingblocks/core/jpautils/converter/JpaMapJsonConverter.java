@@ -2,8 +2,11 @@ package org.digitalmind.eventorchestrator.converter;
 
 import lombok.extern.slf4j.Slf4j;
 import org.digitalmind.eventorchestrator.converter.base.JpaGenericConverter;
+import org.digitalmind.eventorchestrator.converter.exception.JpaMapJsonConverterException;
 
 import jakarta.persistence.Converter;
+import java.lang.reflect.Array;
+import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -13,6 +16,60 @@ public class JpaMapJsonConverter extends JpaGenericConverter<Map<String, Object>
 
     public JpaMapJsonConverter() {
         super(JpaGenericConverter.MapperType.TYPE, false);
+    }
+
+    @Override
+    public String convertToDatabaseColumn(Map<String, Object> attribute) {
+        validateMapPayload(attribute);
+        return super.convertToDatabaseColumn(attribute);
+    }
+
+    private static void validateMapPayload(Map<String, Object> attribute) {
+        if (attribute == null) {
+            return;
+        }
+        for (Map.Entry<?, ?> entry : attribute.entrySet()) {
+            if (!(entry.getKey() instanceof String)) {
+                throw new JpaMapJsonConverterException(
+                        "Map payload key must be String. Unsupported key type: " +
+                                (entry.getKey() == null ? "null" : entry.getKey().getClass().getName())
+                );
+            }
+            validateMapValue(entry.getValue());
+        }
+    }
+
+    private static void validateMapValue(Object value) {
+        if (value == null) {
+            return;
+        }
+        if (value.getClass().isArray()) {
+            int length = Array.getLength(value);
+            for (int i = 0; i < length; i++) {
+                validateMapValue(Array.get(value, i));
+            }
+            return;
+        }
+        if (value instanceof Collection<?> collection) {
+            for (Object item : collection) {
+                validateMapValue(item);
+            }
+            return;
+        }
+        if (value instanceof Map<?, ?> map) {
+            for (Map.Entry<?, ?> nestedEntry : map.entrySet()) {
+                if (!(nestedEntry.getKey() instanceof String)) {
+                    throw new JpaMapJsonConverterException(
+                            "Nested map payload key must be String. Unsupported key type: " +
+                                    (nestedEntry.getKey() == null ? "null" : nestedEntry.getKey().getClass().getName())
+                    );
+                }
+                validateMapValue(nestedEntry.getValue());
+            }
+            return;
+        }
+        // Keep backward compatibility with legacy TYPE-map behavior:
+        // values do not need to implement java.io.Serializable as long as Jackson can serialize them.
     }
 
 }

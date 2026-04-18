@@ -14,6 +14,10 @@ import lombok.ToString;
 import org.digitalmind.buildingblocks.core.jpautils.entity.enumeration.ParameterSource;
 import org.digitalmind.buildingblocks.core.jpautils.entity.enumeration.ParameterType;
 
+import java.lang.reflect.Array;
+import java.io.Serializable;
+import java.util.Collection;
+import java.util.Map;
 import java.util.Locale;
 
 @Builder
@@ -29,7 +33,9 @@ import java.util.Locale;
                 "value"
         }
 )
-public class Parameter {
+public class Parameter implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "The parameter name", required = true)
     private String name;
@@ -87,6 +93,7 @@ public class Parameter {
 
     public void setValue(Object value) {
         validate(this.dataClass, value);
+        validateSerializableValue(value);
         this.value = value;
         if (value != null && this.dataClass == null) {
             this.dataClass = value.getClass();
@@ -127,6 +134,39 @@ public class Parameter {
     private static void validate(Class<?> dataClass, Object value) {
         if (value != null && dataClass != null && !dataClass.equals(value.getClass())) {
             throw new IllegalArgumentException(Parameter.class.getSimpleName() + " The dataClass and value are inconsistent");
+        }
+    }
+
+    /**
+     * Guardrail for ORM lifecycle compatibility: converted parameter values must be serializable.
+     * Supports recursive checks for arrays/collections/maps.
+     */
+    private static void validateSerializableValue(Object value) {
+        if (value == null) {
+            return;
+        }
+        if (value.getClass().isArray()) {
+            int length = Array.getLength(value);
+            for (int i = 0; i < length; i++) {
+                validateSerializableValue(Array.get(value, i));
+            }
+            return;
+        }
+        if (value instanceof Collection<?> collection) {
+            for (Object item : collection) {
+                validateSerializableValue(item);
+            }
+            return;
+        }
+        if (value instanceof Map<?, ?> map) {
+            for (Map.Entry<?, ?> entry : map.entrySet()) {
+                validateSerializableValue(entry.getKey());
+                validateSerializableValue(entry.getValue());
+            }
+            return;
+        }
+        if (!(value instanceof Serializable)) {
+            throw new IllegalArgumentException(Parameter.class.getSimpleName() + " value type must be serializable. Unsupported type: " + value.getClass().getName());
         }
     }
 }

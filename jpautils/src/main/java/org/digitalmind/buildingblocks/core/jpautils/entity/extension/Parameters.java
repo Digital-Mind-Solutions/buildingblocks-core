@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -16,7 +17,9 @@ import java.util.Collection;
 @ToString(callSuper = true)
 
 @ApiModel(value = "Parameters", description = "The parameters.")
-public class Parameters extends ArrayList<Parameter> {
+public class Parameters extends ArrayList<Parameter> implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     public Parameters() {
     }
