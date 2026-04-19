@@ -9,14 +9,33 @@ allprojects {
     repositories {
         mavenLocal()
         mavenCentral()
-        maven {
-            name = "digitalmind"
-            url = uri("https://maven.pkg.github.com/Digital-Mind-Solutions/maven-repository")
-            credentials {
-                username = project.findProperty("dm.ghub.user") ?: System.getenv("DM_GITHUB_USER")
-                password = project.findProperty("dm.ghub.key") ?: System.getenv("DM_GITHUB_TOKEN")
+
+        def nexusMavenPublicUrl = findProperty('nexusMavenPublicUrl') ?: System.getenv('NEXUS_MAVEN_PUBLIC_URL')
+        if (nexusMavenPublicUrl) {
+            maven {
+                name = 'nexus-maven-public'
+                url = uri(nexusMavenPublicUrl)
+                allowInsecureProtocol = nexusMavenPublicUrl.toString().startsWith('http:')
             }
         }
+
+        def nexusDigitalUrl = findProperty('nexusDigitalUrl') ?: System.getenv('NEXUS_DIGITAL_URL')
+        if (nexusDigitalUrl) {
+            maven {
+                name = 'nexus-vdf-digital'
+                url = uri(nexusDigitalUrl)
+                allowInsecureProtocol = nexusDigitalUrl.toString().startsWith('http:')
+                def nexusUser = findProperty('nexusDigitalUser') ?: System.getenv('NEXUS_DIGITAL_USER')
+                def nexusPass = findProperty('nexusDigitalPassword') ?: System.getenv('NEXUS_DIGITAL_PASSWORD')
+                if (nexusUser && nexusPass) {
+                    credentials {
+                        username = nexusUser
+                        password = nexusPass
+                    }
+                }
+            }
+        }
+
     }
 }
 
