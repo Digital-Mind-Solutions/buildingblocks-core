@@ -1,6 +1,11 @@
 package org.digitalmind.buildingblocks.core.jpautils.entity;
 
-public interface PartitionedIdModel<P, T> {
+import java.io.Serializable;
+
+/**
+ * Partition-scoped identity: {@link #getPartitionKey()} plus {@link IdModel#getId()}.
+ */
+public interface PartitionedIdModel<P, T> extends IdModel<T>, Serializable {
+
     P getPartitionKey();
-    T getId();
 }
