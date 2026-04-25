@@ -3,13 +3,10 @@ package org.digitalmind.buildingblocks.core.jpautils.entity;
 import java.io.Serializable;
 import java.util.function.BiFunction;
 
-public interface PartitionedIdModel<P, T> extends Serializable {
+public interface PartitionedIdModel<P, T> extends IdModel<T> {
     static final String PARTITION_KEY_DELIMITER = "~";
 
     P getPartitionKey();
-
-    T getId();
-
 
     static <P, T, R extends PartitionedIdModel<P, T>> R fromString(
             String value,
