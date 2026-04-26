@@ -1,10 +1,10 @@
 package org.digitalmind.buildingblocks.core.jpautils.entity;
 
-import java.io.Serializable;
 import java.util.function.BiFunction;
 
 public interface PartitionedIdModel<P, T> extends IdModel<T> {
-    static final String PARTITION_KEY_DELIMITER = "~";
+
+    String PARTITION_KEY_DELIMITER = "~";
 
     P getPartitionKey();
 
@@ -29,12 +29,9 @@ public interface PartitionedIdModel<P, T> extends IdModel<T> {
     }
 
     static String calcIdentifier(Object partitionKey, Object id) {
-        String identifier =
-                String.valueOf(partitionKey) +
-                        PARTITION_KEY_DELIMITER +
-                        String.valueOf(id);
-
-        return identifier;
+        return String.valueOf(partitionKey)
+                + PARTITION_KEY_DELIMITER
+                + String.valueOf(id);
     }
 
     @Override
@@ -42,5 +39,30 @@ public interface PartitionedIdModel<P, T> extends IdModel<T> {
         return calcIdentifier(this.getPartitionKey(), this.getId());
     }
 
-}
+    @Override
+    default boolean isValidIdentifier(String identifier) {
+        return isValidIdentifier(identifier, this.getClass());
+    }
 
+    static boolean isValidIdentifier(String identifier, Class<?> modelClass) {
+        if (identifier == null || identifier.isEmpty()) {
+            return false;
+        }
+
+        int index = identifier.indexOf(PARTITION_KEY_DELIMITER);
+
+        if (index <= 0 || index == identifier.length() - 1) {
+            return false;
+        }
+
+        String partitionKey = identifier.substring(0, index);
+        String id = identifier.substring(index + 1);
+
+        Class<?> partitionKeyClass = IdModel.resolveTypeArgument(modelClass, PartitionedIdModel.class, 0);
+        Class<?> idClass = IdModel.resolveTypeArgument(modelClass, PartitionedIdModel.class, 1);
+
+        return IdModel.isValidIdentifier(partitionKey, partitionKeyClass)
+                && IdModel.isValidIdentifier(id, idClass);
+    }
+
+}
