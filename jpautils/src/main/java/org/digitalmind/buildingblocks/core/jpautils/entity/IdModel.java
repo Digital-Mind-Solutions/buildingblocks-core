@@ -13,6 +13,9 @@ public interface IdModel<T> {
 
     T getId();
 
+    // =====================
+    // PARSERS REGISTRY
+    // =====================
     Map<Class<?>, Function<String, ?>> IDENTIFIER_PARSERS = new ConcurrentHashMap<>(Map.ofEntries(
             Map.entry(String.class, s -> s),
             Map.entry(Long.class, Long::parseLong),
@@ -28,6 +31,9 @@ public interface IdModel<T> {
             Map.entry(UUID.class, UUID::fromString)
     ));
 
+    // =====================
+    // SERIALIZE
+    // =====================
     static String calcIdentifier(Object id) {
         return String.valueOf(id);
     }
@@ -36,6 +42,27 @@ public interface IdModel<T> {
         return calcIdentifier(this.getId());
     }
 
+    // =====================
+    // PARSE (RENAMED CORECT)
+    // =====================
+    @SuppressWarnings("unchecked")
+    static <T> T fromIdentifier(String identifier, Class<T> idClass) {
+        if (identifier == null || identifier.isEmpty() || idClass == null) {
+            return null;
+        }
+
+        Function<String, ?> parser = IDENTIFIER_PARSERS.get(idClass);
+
+        if (parser == null) {
+            throw new IllegalArgumentException("Unsupported identifier type: " + idClass.getName());
+        }
+
+        return (T) parser.apply(identifier);
+    }
+
+    // =====================
+    // VALIDARE
+    // =====================
     default boolean isValidIdentifier(String identifier) {
         Class<?> idClass = resolveTypeArgument(this.getClass(), IdModel.class, 0);
         return isValidIdentifier(identifier, idClass);
@@ -47,6 +74,7 @@ public interface IdModel<T> {
         }
 
         Function<String, ?> parser = IDENTIFIER_PARSERS.get(idClass);
+
         if (parser == null) {
             return false;
         }
@@ -59,6 +87,9 @@ public interface IdModel<T> {
         }
     }
 
+    // =====================
+    // GENERIC TYPE RESOLUTION
+    // =====================
     static Class<?> resolveTypeArgument(Class<?> clazz, Class<?> targetRawType, int argumentIndex) {
         Class<?> current = clazz;
 
@@ -87,28 +118,26 @@ public interface IdModel<T> {
     }
 
     static Class<?> resolveTypeArgumentFromType(Type type, Class<?> targetRawType, int argumentIndex) {
-        if (!(type instanceof ParameterizedType parameterizedType)) {
+        if (!(type instanceof ParameterizedType pt)) {
             return null;
         }
 
-        Type rawType = parameterizedType.getRawType();
+        Type rawType = pt.getRawType();
 
         if (!(rawType instanceof Class<?> rawClass)) {
             return null;
         }
 
         if (targetRawType.equals(rawClass)) {
-            Type targetType = parameterizedType.getActualTypeArguments()[argumentIndex];
-
-            if (targetType instanceof Class<?> targetClass) {
-                return targetClass;
+            Type arg = pt.getActualTypeArguments()[argumentIndex];
+            if (arg instanceof Class<?>) {
+                return (Class<?>) arg;
             }
-
             return null;
         }
 
-        for (Type interfaceType : rawClass.getGenericInterfaces()) {
-            Class<?> resolved = resolveTypeArgumentFromType(interfaceType, targetRawType, argumentIndex);
+        for (Type iface : rawClass.getGenericInterfaces()) {
+            Class<?> resolved = resolveTypeArgumentFromType(iface, targetRawType, argumentIndex);
             if (resolved != null) {
                 return resolved;
             }
