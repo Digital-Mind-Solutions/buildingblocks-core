@@ -37,6 +37,7 @@ public interface PartitionedIdModel<P, T> extends IdModel<T> {
         return identifier;
     }
 
+    @Override
     default String toIdentifier() {
         return calcIdentifier(this.getPartitionKey(), this.getId());
     }
