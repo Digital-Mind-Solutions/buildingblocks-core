@@ -1,10 +1,11 @@
 package org.digitalmind.buildingblocks.core.jpautils.entity.generator;
 
-public interface PartitionedGeneratedIdModel<P> {
+public interface PartitionAwareIdModel<P, T> {
 
     P getPartitionKey();
 
     void setPartitionKey(P partitionKey);
 
-    P calcPartitionKey();
+    P calcPartitionKey(T generatedId);
+
 }
