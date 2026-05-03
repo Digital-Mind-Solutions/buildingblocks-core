@@ -1,5 +1,6 @@
 package org.digitalmind.buildingblocks.core.jpautils.entity;
 
+import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.math.BigDecimal;
@@ -9,7 +10,7 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 
-public interface IdModel<T> {
+public interface IdModel<T> extends Serializable {
 
     T getId();
 
