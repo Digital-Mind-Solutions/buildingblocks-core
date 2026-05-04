@@ -14,9 +14,7 @@ package org.digitalmind.buildingblocks.core.jpautils.entity;
  * @param <T> generated numeric id type
  * @param <K> composite id type
  */
-public interface PartitionedIdCreateModel<P, T, K> {
-    P getPartitionKey();
-    T getId();
+public interface PartitionedIdCreateModel<P, T, K> extends PartitionedIdModel<P, T> {
 
     K createKey(P partitionKey, T id);
 }
